@@ -4,6 +4,36 @@
   min-height: 100vh;
 }
 
+/* ===== General Styling ===== */
+.basic-image-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 2px solid black;
+  border-radius: 10px;
+  width: fit-content;
+  padding: 2px 8px;
+}
+
+.nav-btn {
+  padding: 0.75rem 3rem;
+  font-size: 1rem;
+  border: 1px solid #333;
+  background: white;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover {
+  background: #f0f0f0;
+}
+
 /* ===== Landing Page ===== */
 .landing-page {
   display: flex;
@@ -25,19 +55,6 @@
 .landing-title {
   font-size: 3rem;
   font-weight: 400;
-}
-
-.start-btn {
-  padding: 0.75rem 3rem;
-  font-size: 1rem;
-  border: 1px solid #333;
-  background: white;
-  border-radius: 4px;
-  transition: background 0.2s;
-}
-
-.start-btn:hover {
-  background: #f0f0f0;
 }
 
 .landing-footer {
@@ -154,8 +171,12 @@
 }
 
 @keyframes bounceIndicator {
-  from { transform: translateX(-50%) translateY(0); }
-  to   { transform: translateX(-50%) translateY(-5px); }
+  from {
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    transform: translateX(-50%) translateY(-5px);
+  }
 }
 
 .focus-indicator {
@@ -215,7 +236,7 @@
 .detail-topbar {
   flex-shrink: 0;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #e0e0e0;
@@ -273,6 +294,8 @@
 .detail-col--character {
   flex: 0 0 50vw;
   align-items: center;
+  overflow: visible;
+  z-index: 1;
 }
 
 .detail-col--bio {
@@ -303,7 +326,6 @@
   font-weight: 600;
   flex-shrink: 0;
 }
-
 
 /* Items column */
 .items-box {
@@ -352,23 +374,39 @@
 }
 
 @keyframes slideInFromRight {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideInFromLeft {
-  from { transform: translateX(-100%); }
-  to   { transform: translateX(0); }
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes slideOutToLeft {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes slideOutToRight {
-  from { transform: translateX(0); }
-  to   { transform: translateX(100%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }
 
 .items-grid {
@@ -495,19 +533,20 @@
 }
 
 .character-image-box {
-  flex: 1;
+  position: relative;
+  width: 70%;
+  height: 90%;
   min-height: 0;
-  border: 1px solid #333;
+  border: 2px solid black;
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   color: #888;
   font-size: 0.85rem;
   position: relative;
   max-width: 100vw;
-  margin-right: 0;
+  margin: 0 auto;
   transition: max-width 0.8s ease, margin-right 0.8s ease;
 }
 
@@ -519,8 +558,8 @@
 
 .gear-column {
   position: absolute;
-  right: -0.5rem;
-  top: 0;
+  right: 3rem;
+  top: 10px;
   bottom: 0;
   width: 110px;
   display: flex;
@@ -540,16 +579,15 @@
 }
 
 .gear-slot-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .gear-slot {
+  position: relative;
   flex: 1;
-  border: 1px solid #333;
+  aspect-ratio: 1 / 1;
+  border: 2px solid #333;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -557,27 +595,26 @@
   font-size: 0.75rem;
   color: #555;
   overflow: hidden;
-}
-
-.gear-slot-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  background-color: white;
 }
 
 .gear-label {
-  font-size: 0.6rem;
-  color: #555;
-  text-align: center;
-  flex-shrink: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+}
+
+.gear-slot-img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
 }
 
 .gear-tooltip {
   position: absolute;
-  right: calc(100% + 0.5rem);
+  left: calc(100% + 0.5rem);
   top: 0;
   width: 160px;
   background: white;
@@ -588,36 +625,57 @@
   color: #333;
   line-height: 1.4;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10;
   pointer-events: none;
+  z-index: 100;
 }
 
 .type-range-row {
   position: absolute;
-  bottom: 0.5rem;
-  left: 0.5rem;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  gap: 0.4rem;
   z-index: 2;
 }
 
-.type-range-box {
-  border: 1px solid #333;
-  border-radius: 4px;
-  padding: 0.35rem 0.6rem;
+.character-image-type-box {
+  border: 2px solid black;
+  border-right: 0px;
+  border-radius: 10px 0px 0px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.1rem;
+  gap: 2px;
   background: white;
-  min-width: 60px;
+  padding: 4px 30px;
+}
+
+.character-image-range-box {
+  border: 2px solid black;
+  border-radius: 0px 10px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: white;
+  padding: 4px 30px;
+}
+
+.type-range-box {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: white;
 }
 
 .type-range-label {
   font-size: 0.6rem;
-  color: #888;
+  color: black;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  margin-right: 5px;
 }
 
 .type-range-value {
@@ -626,14 +684,15 @@
   color: #333;
 }
 
-
 .character-bio-box {
   flex: 1;
   border: 1px solid #333;
   border-radius: 6px;
   padding: 1rem;
-  color: #888;
-  font-size: 0.85rem;
+  color: black;
+  font-size: 20px;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .party-heading {
@@ -690,7 +749,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  justify-content: space-between;
 }
 
 .party-card-label {
@@ -700,23 +759,29 @@
 }
 
 .party-card-image {
+  position: relative;
   width: 100%;
+  height: 95%;
   aspect-ratio: 1;
   flex-shrink: 0;
-  border: 1px solid #333;
+  border: 2px solid black;
   border-radius: 4px;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.party-card-label {
+  position: absolute;
+  bottom: -15px;
+  width: fit-content;
+}
+
 .party-card-stats {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 0.15rem;
+  gap: 0.2px;
 }
 
 .party-stat-row {
@@ -752,6 +817,10 @@
   height: 100%;
   object-fit: cover;
   border-radius: 3px;
+}
+
+.party-level {
+  padding: 4px 8px;
 }
 
 .ap-row {
@@ -804,7 +873,7 @@
 
 .stat-bar {
   height: 100%;
-  background: #555;
+  background: red;
   border-radius: 2px;
 }
 

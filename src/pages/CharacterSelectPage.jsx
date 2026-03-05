@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import CharacterCard from '../components/characterSelect/CharacterCard'
 import { fetchAllRecords } from '../lib/airtable'
 
 const COLS = 5
@@ -95,21 +96,15 @@ export default function CharacterSelectPage({ onSelectCharacter, onBack }) {
               <div key={rowIdx} className="char-row">
                 {characters.slice(rowIdx * COLS, (rowIdx + 1) * COLS).map((char, colIdx) => {
                   const flatIdx = rowIdx * COLS + colIdx
-                  const isActive = flatIdx === activeIndex
                   return (
-                    <div key={char.id} className="char-card-wrapper">
-                      {isActive && <div className="focus-indicator">▼</div>}
-                      <div
-                        className={`character-card${isActive ? ' character-card--focused' : ''}`}
-                        onMouseEnter={() => setActiveIndex(flatIdx)}
-                        onClick={() => onSelectCharacter(char)}
-                      >
-                        {char.headshot
-                          ? <img className="card-headshot" src={char.headshot} alt={char.name} />
-                          : <span>{char.name}</span>
-                        }
-                      </div>
-                    </div>
+                    <CharacterCard
+                      key={char.id}
+                      char={char}
+                      isActive={flatIdx === activeIndex}
+                      flatIdx={flatIdx}
+                      setActiveIndex={setActiveIndex}
+                      onSelectCharacter={onSelectCharacter}
+                    />
                   )
                 })}
               </div>
