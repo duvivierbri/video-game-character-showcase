@@ -19,6 +19,7 @@ export async function fetchAllRecords() {
 
   do {
     const url = new URL(BASE_URL)
+    url.searchParams.set('view', 'Grid view')
     if (offset) url.searchParams.set('offset', offset)
 
     const res = await fetch(url.toString(), { headers })

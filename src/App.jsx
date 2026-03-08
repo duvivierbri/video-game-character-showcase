@@ -41,6 +41,12 @@ function App() {
 
   return (
     <div className="app">
+      <div className="rotate-overlay">
+        <div className="rotate-overlay__content">
+          <div className="rotate-overlay__icon">⟳</div>
+          <p>Please rotate your device to landscape mode</p>
+        </div>
+      </div>
       {page === 'landing' && (
         <LandingPage onStart={() => navigate('/character-select')} />
       )}

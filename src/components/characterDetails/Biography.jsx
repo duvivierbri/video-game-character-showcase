@@ -10,8 +10,9 @@ export default function Biography({ character, partyMembers, onSelectCharacter }
       <div className="party-section">
         <h4 className="party-heading">Party Members</h4>
         <div className="party-members-row">
-          {partyMembers.map((member) => (
+          {partyMembers.map((member, i) => (
             <PartyMemberCard
+              key={member.id ?? i}
               member={member}
               onSelectCharacter={onSelectCharacter}
             />
