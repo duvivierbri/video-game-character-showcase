@@ -1,4 +1,4 @@
-const ITEM_CATEGORIES = [
+export const ITEM_CATEGORIES = [
   { name: "Items", filter: "Item" },
   { name: "Equipment", filter: "Equipment" },
   { name: "Special", filter: "Special" },
