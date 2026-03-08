@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Accessories from "../components/characterDetails/Accessories";
 import Biography from "../components/characterDetails/Biography";
 import CharacterFullBodyImage from "../components/characterDetails/CharacterFullBodyImage";
-import Inventory from "../components/characterDetails/Inventory";
+import Inventory, { ITEM_CATEGORIES } from "../components/characterDetails/Inventory";
 import Stats from "../components/characterDetails/Stats";
 import Vitals from "../components/characterDetails/Vitals";
 import { fetchRecord, fetchRecordByName } from "../lib/airtable";
@@ -46,6 +46,8 @@ export default function CharacterDetailPage({
           category: cats[i] ?? "",
           image: imgs[i]?.thumbnails?.large?.url ?? null,
         }));
+        const firstItem = inventory.find((item) => item.category === ITEM_CATEGORIES[0].filter);
+        if (firstItem) setActiveItem(firstItem);
         setCharacter({
           id: r.id,
           name: r.fields.Name ?? "—",
@@ -94,14 +96,16 @@ export default function CharacterDetailPage({
           ),
         ]);
 
+        const accessories = accRecords.map((ar) => ({
+          id: ar.id,
+          name: ar.fields.Name ?? "—",
+          description: ar.fields.Description ?? "",
+          image: ar.fields.Image?.[0]?.thumbnails?.large?.url ?? null,
+        }));
+        if (accessories[0]) setActiveAccessory(accessories[0]);
         setCharacter((prev) => ({
           ...prev,
-          accessories: accRecords.map((ar) => ({
-            id: ar.id,
-            name: ar.fields.Name ?? "—",
-            description: ar.fields.Description ?? "",
-            image: ar.fields.Image?.[0]?.thumbnails?.large?.url ?? null,
-          })),
+          accessories,
           gear: gearRecords.map((gr) =>
             gr
               ? {
@@ -163,6 +167,9 @@ export default function CharacterDetailPage({
     setPrevCategoryIndex(categoryIndex);
     setSlideDir(dir);
     setCategoryIndex(newIndex);
+    const filter = ITEM_CATEGORIES[newIndex].filter;
+    const first = character.inventory.find((item) => item.category === filter);
+    setActiveItem(first ?? null);
     timeoutRef.current = setTimeout(
       () => setPrevCategoryIndex(null),
       SLIDE_DURATION

@@ -415,7 +415,7 @@
 
 .col-title {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
   flex-shrink: 0;
 }
 
@@ -935,6 +935,10 @@
   font-size: 0.85rem;
   font-weight: 500;
   flex-shrink: 0;
+}
+
+.detail-col--stats h4.col-title {
+  font-weight: 700;
 }
 
 .stats-bars {

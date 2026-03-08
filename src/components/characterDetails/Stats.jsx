@@ -12,7 +12,7 @@ export default function Stats({ character }) {
           />
         </div>
       </div>
-      <h4>Stats</h4>
+      <h4 className="col-title">Stats</h4>
       <div className="stats-bars">
         {Object.entries(character.stats).map(([label, value]) => (
           <div key={label} className="stat-row">
