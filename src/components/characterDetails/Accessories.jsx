@@ -1,31 +1,41 @@
+const TOTAL_SLOTS = 6;
+
 export default function Accessories({ character, activeAccessory, setActiveAccessory }) {
+  const accessories = character.accessories ?? [];
+  const slots = Array.from({ length: TOTAL_SLOTS }, (_, i) => accessories[i] ?? null);
+
   return (
     <>
       <h4>Accessories</h4>
       <div className="accessories-grid">
-        {(character.accessories ?? []).map((acc) => (
+        {slots.map((acc, i) => (
           <div
-            key={acc.id}
+            key={acc?.id ?? `empty-${i}`}
             className={`acc-slot${
-              activeAccessory?.id === acc.id ? " acc-slot--active" : ""
+              acc && activeAccessory?.id === acc.id ? " acc-slot--active" : ""
             }`}
-            onMouseEnter={() => setActiveAccessory(acc)}
+            onMouseEnter={() => acc && setActiveAccessory(acc)}
             onMouseLeave={() => setActiveAccessory(null)}
           >
-            {acc.image ? (
+            {acc?.image ? (
               <img
                 src={acc.image}
                 alt={acc.name}
                 className="acc-slot-img"
               />
-            ) : (
+            ) : acc ? (
               <span className="acc-slot-name">{acc.name}</span>
-            )}
+            ) : null}
           </div>
         ))}
       </div>
       <div className="acc-description-box">
-        {activeAccessory?.description}
+        {activeAccessory && (
+          <>
+            <strong>{activeAccessory.name}</strong>
+            {activeAccessory.description && <p>{activeAccessory.description}</p>}
+          </>
+        )}
       </div>
     </>
   );

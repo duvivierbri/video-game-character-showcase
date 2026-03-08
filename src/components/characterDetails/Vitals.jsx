@@ -1,10 +1,6 @@
 export default function Vitals({ character, panel }) {
   return (
-    <div
-      className={`char-vitals${
-        panel === 1 ? " char-vitals--hidden" : ""
-      }`}
-    >
+    <div className={`char-vitals${panel === 1 ? " char-vitals--hidden" : ""}`}>
       <div className="vitals-row">
         <span className="vital">
           <strong>HP:</strong> {character.hp} / 100
@@ -12,8 +8,6 @@ export default function Vitals({ character, panel }) {
         <span className="vital">
           <strong>SP:</strong> {character.sp} / 100
         </span>
-      </div>
-      <div className="vitals-row">
         <span className="vital">
           <strong>Lvl:</strong> {character.level}
         </span>
@@ -21,6 +15,7 @@ export default function Vitals({ character, panel }) {
           <strong>Exp:</strong> {character.exp}
         </span>
       </div>
+
       <div className="next-level-row">
         <span className="next-level-label">Next Level:</span>
         <div className="next-level-bar-container">

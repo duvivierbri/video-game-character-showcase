@@ -4,6 +4,13 @@ const ITEM_CATEGORIES = [
   { name: "Special", filter: "Special" },
 ];
 
+const TOTAL_SLOTS = 9;
+
+function getSlots(inventory, filter) {
+  const items = inventory.filter((item) => item.category === filter);
+  return Array.from({ length: TOTAL_SLOTS }, (_, i) => items[i] ?? null);
+}
+
 export default function Inventory({
   character,
   categoryIndex,
@@ -32,51 +39,45 @@ export default function Inventory({
             <div
               className={`items-grid items-grid--slide-out-${slideDir}`}
             >
-              {character.inventory
-                .filter(
-                  (item) =>
-                    item.category ===
-                    ITEM_CATEGORIES[prevCategoryIndex].filter
-                )
-                .map((item) => (
-                  <div key={item.id} className="item-slot">
-                    {item.name}
-                  </div>
-                ))}
+              {getSlots(character.inventory, ITEM_CATEGORIES[prevCategoryIndex].filter).map((item, i) => (
+                <div key={item?.id ?? `empty-${i}`} className="item-slot">
+                  {item?.name}
+                </div>
+              ))}
             </div>
           )}
           <div
             key={categoryIndex}
             className={`items-grid items-grid--slide-in-${slideDir}`}
           >
-            {character.inventory
-              .filter(
-                (item) =>
-                  item.category === ITEM_CATEGORIES[categoryIndex].filter
-              )
-              .map((item) => (
-                <div
-                  key={item.id}
-                  className={`item-slot${
-                    activeItem?.id === item.id ? " item-slot--active" : ""
-                  }`}
-                  onMouseEnter={() => setActiveItem(item)}
-                >
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="item-slot-img"
-                    />
-                  ) : (
-                    <span>{item.name}</span>
-                  )}
-                </div>
-              ))}
+            {getSlots(character.inventory, ITEM_CATEGORIES[categoryIndex].filter).map((item, i) => (
+              <div
+                key={item?.id ?? `empty-${i}`}
+                className={`item-slot${
+                  item && activeItem?.id === item.id ? " item-slot--active" : ""
+                }`}
+                onMouseEnter={() => item && setActiveItem(item)}
+              >
+                {item?.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="item-slot-img"
+                  />
+                ) : item ? (
+                  <span>{item.name}</span>
+                ) : null}
+              </div>
+            ))}
           </div>
         </div>
         <div className="item-description-box">
-          {activeItem?.description}
+          {activeItem && (
+            <>
+              <strong>{activeItem.name}</strong>
+              {activeItem.description && <p>{activeItem.description}</p>}
+            </>
+          )}
         </div>
       </div>
     </div>
