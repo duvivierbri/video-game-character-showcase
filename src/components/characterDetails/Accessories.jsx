@@ -15,7 +15,6 @@ export default function Accessories({ character, activeAccessory, setActiveAcces
               acc && activeAccessory?.id === acc.id ? " acc-slot--active" : ""
             }`}
             onMouseEnter={() => acc && setActiveAccessory(acc)}
-            onMouseLeave={() => setActiveAccessory(null)}
           >
             {acc?.image ? (
               <img

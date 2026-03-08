@@ -149,12 +149,7 @@ export default function CharacterDetailPage({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  if (loading)
-    return (
-      <div className="detail-page detail-page--centered">
-        <p>Loading…</p>
-      </div>
-    );
+  if (loading) return <div className="spinner-overlay"><div className="spinner" /></div>;
 
   if (error)
     return (
@@ -186,11 +181,11 @@ export default function CharacterDetailPage({
   return (
     <div className="detail-page">
       <div className="detail-topbar">
-        <button className="nav-btn" onClick={onBack}>
+        <button className="back-btn" onClick={onBack}>
           Back
         </button>
         <button className="nav-btn" onClick={onStart}>
-          Start
+          Welcome Page
         </button>
       </div>
 

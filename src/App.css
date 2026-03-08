@@ -25,14 +25,11 @@
 .nav-btn {
   padding: 0.75rem 3rem;
   font-size: 1rem;
-  border: 1px solid #333;
-  background: white;
-  border-radius: 4px;
-  transition: background 0.2s;
-}
-
-.nav-btn:hover {
-  background: #f0f0f0;
+  border: none;
+  background: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
 /* ===== Landing Page ===== */
@@ -80,14 +77,31 @@
 .back-btn-sm {
   padding: 0.35rem 1rem;
   font-size: 0.85rem;
-  border: 1px solid #333;
-  background: white;
-  border-radius: 4px;
-  transition: background 0.2s;
+  font-weight: 700;
+  border: none;
+  background: none;
+  transition: opacity 0.2s;
 }
 
 .back-btn-sm:hover {
-  background: #f0f0f0;
+  opacity: 0.7;
+}
+
+@keyframes bounceLeft {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-5px); }
+}
+
+.back-btn::before,
+.back-btn-sm::before {
+  content: '←';
+  display: inline-block;
+  margin-right: 0.4rem;
+}
+
+.back-btn:hover::before,
+.back-btn-sm:hover::before {
+  animation: bounceLeft 0.4s ease-in-out infinite alternate;
 }
 
 .select-main {
@@ -101,7 +115,7 @@
 .preview-panel {
   flex: 1;
   align-self: stretch;
-  border: 1px solid #333;
+  border: 2px solid black;
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -148,8 +162,8 @@
 }
 
 .choose-title {
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 1.4rem;
+  font-weight: 700;
   text-align: center;
 }
 
@@ -192,10 +206,10 @@
 }
 
 .character-card {
-  border: 1px solid #333;
+  border: 2px solid black;
   border-radius: 6px;
-  width: 95px;
-  height: 120px;
+  width: 115px;
+  height: 145px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -227,6 +241,27 @@
   justify-content: center;
 }
 
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 72px;
+  height: 72px;
+  border: 5px solid #ddd;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
 .character-fullbody-img {
   width: 100%;
   height: 100%;
@@ -246,14 +281,14 @@
 .back-btn {
   padding: 0.5rem 1.5rem;
   font-size: 0.9rem;
-  border: 1px solid #333;
-  background: white;
-  border-radius: 4px;
-  transition: background 0.2s;
+  font-weight: 700;
+  border: none;
+  background: none;
+  transition: opacity 0.2s;
 }
 
 .back-btn:hover {
-  background: #f0f0f0;
+  opacity: 0.7;
 }
 
 /* Container clips the 150vw canvas to 100vw viewport */
@@ -925,8 +960,8 @@
 }
 
 .acc-description-box {
-  flex-shrink: 0;
-  height: 90px;
+  flex: 1;
+  min-height: 0;
   border: 2px solid black;
   border-radius: 4px;
   padding: 0.5rem;
@@ -947,31 +982,52 @@
 }
 
 /* Panel navigation arrow buttons */
+@keyframes bounceRight {
+  from { transform: translateX(0); }
+  to   { transform: translateX(5px); }
+}
+
 .panel-nav-btn {
   position: absolute;
   bottom: 1.5rem;
   height: 40px;
   padding: 0 1rem;
   font-size: 0.85rem;
-  border: 1px solid #333;
-  background: white;
-  border-radius: 4px;
+  border: none;
+  background: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s;
+  font-weight: 700;
   white-space: nowrap;
-}
-
-.panel-nav-btn:hover {
-  background: #f0f0f0;
+  transition: opacity 0.2s;
 }
 
 .panel-nav-btn--next {
   right: 1.5rem;
 }
 
+.panel-nav-btn--next::after {
+  content: '→';
+  display: inline-block;
+  margin-left: 0.4rem;
+}
+
+.panel-nav-btn--next:hover::after {
+  animation: bounceRight 0.4s ease-in-out infinite alternate;
+}
+
 .panel-nav-btn--prev {
   left: 1.5rem;
+}
+
+.panel-nav-btn--prev::before {
+  content: '←';
+  display: inline-block;
+  margin-right: 0.4rem;
+}
+
+.panel-nav-btn--prev:hover::before {
+  animation: bounceLeft 0.4s ease-in-out infinite alternate;
 }

@@ -58,11 +58,7 @@ export default function CharacterSelectPage({ onSelectCharacter, onBack }) {
   const numRows = Math.ceil(characters.length / COLS)
   const activeChar = characters[activeIndex]
 
-  if (loading) return (
-    <div className="select-page select-page--centered">
-      <p>Loading characters…</p>
-    </div>
-  )
+  if (loading) return <div className="spinner-overlay"><div className="spinner" /></div>
 
   if (error) return (
     <div className="select-page select-page--centered">
