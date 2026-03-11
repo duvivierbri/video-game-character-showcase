@@ -4,6 +4,11 @@
   min-width: 600px;
   min-height: 100vh;
   color: #000000;
+  background-image: url("./assets/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 /* ===== Rotate Overlay ===== */
@@ -34,8 +39,12 @@
 }
 
 @keyframes rotateHint {
-  from { transform: rotate(-45deg); }
-  to   { transform: rotate(45deg); }
+  from {
+    transform: rotate(-45deg);
+  }
+  to {
+    transform: rotate(45deg);
+  }
 }
 
 @media (orientation: portrait) and (max-width: 1024px) {
@@ -67,6 +76,7 @@
   border: none;
   background: none;
   font-weight: 700;
+  color: white;
   cursor: pointer;
   transition: opacity 0.2s;
 }
@@ -92,6 +102,7 @@
 .landing-title {
   font-size: 4rem;
   font-weight: 700;
+  color: white;
 }
 
 .landing-buttons {
@@ -172,6 +183,7 @@
   font-weight: 700;
   border: none;
   background: none;
+  color: white;
   transition: opacity 0.2s;
 }
 
@@ -180,13 +192,17 @@
 }
 
 @keyframes bounceLeft {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-5px); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-5px);
+  }
 }
 
 .back-btn::before,
 .back-btn-sm::before {
-  content: '←';
+  content: "←";
   display: inline-block;
   margin-right: 0.4rem;
 }
@@ -215,6 +231,7 @@
   justify-content: center;
   overflow: hidden;
   padding: 0.75rem;
+  background: white;
 }
 
 .preview-fullbody {
@@ -257,6 +274,7 @@
   font-size: 1.4rem;
   font-weight: 700;
   text-align: center;
+  color: white;
 }
 
 .char-rows {
@@ -308,6 +326,7 @@
   cursor: pointer;
   font-size: 0.8rem;
   color: #555;
+  background: white;
   transition: background 0.2s, box-shadow 0.2s;
 }
 
@@ -334,7 +353,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner-overlay {
@@ -376,6 +397,7 @@
   font-weight: 700;
   border: none;
   background: none;
+  color: white;
   transition: opacity 0.2s;
 }
 
@@ -456,6 +478,7 @@
   font-size: 0.9rem;
   font-weight: 700;
   flex-shrink: 0;
+  color: white;
 }
 
 /* Items column */
@@ -466,6 +489,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  background: white;
 }
 
 .items-header {
@@ -599,6 +623,7 @@
   flex-shrink: 0;
   line-height: 1.1;
   text-align: center;
+  color: white;
 }
 
 .char-vitals {
@@ -633,6 +658,7 @@
   border-radius: 100px;
   font-weight: bold;
   white-space: nowrap;
+  background: white;
 }
 
 .next-level-row {
@@ -647,6 +673,7 @@
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
+  color: white;
 }
 
 .next-level-bar-container {
@@ -684,6 +711,7 @@
   justify-content: center;
   color: #888;
   font-size: 0.85rem;
+  background: white;
   transition: max-width 0.8s ease;
 }
 
@@ -829,6 +857,7 @@
   font-size: 20px;
   overflow-y: auto;
   min-height: 0;
+  background: white;
 }
 
 .party-heading {
@@ -838,6 +867,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   flex-shrink: 0;
+  color: white;
 }
 
 .party-members-row {
@@ -917,7 +947,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 0.2px;
+  gap: 3px;
 }
 
 .party-stat-row {
@@ -970,6 +1000,7 @@
   font-size: 0.75rem;
   white-space: nowrap;
   flex-shrink: 0;
+  color: white;
 }
 
 .detail-col--stats h4 {
@@ -997,7 +1028,7 @@
 .stat-label {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #000000;
+  color: white;
   width: 2.2rem;
   flex-shrink: 0;
   text-align: right;
@@ -1034,6 +1065,7 @@
   font-size: 0.55rem;
   color: #666;
   cursor: pointer;
+  background: white;
   transition: background 0.15s;
   overflow: hidden;
 }
@@ -1066,6 +1098,7 @@
   font-size: 14px;
   color: #000000;
   overflow-y: auto;
+  background: white;
 }
 
 .range-section h4 {
@@ -1081,8 +1114,12 @@
 
 /* Panel navigation arrow buttons */
 @keyframes bounceRight {
-  from { transform: translateX(0); }
-  to   { transform: translateX(5px); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(5px);
+  }
 }
 
 .panel-nav-btn {
@@ -1098,6 +1135,7 @@
   justify-content: center;
   cursor: pointer;
   font-weight: 700;
+  color: white;
   white-space: nowrap;
   transition: opacity 0.2s;
 }
@@ -1107,7 +1145,7 @@
 }
 
 .panel-nav-btn--next::after {
-  content: '→';
+  content: "→";
   display: inline-block;
   margin-left: 0.4rem;
 }
@@ -1121,7 +1159,7 @@
 }
 
 .panel-nav-btn--prev::before {
-  content: '←';
+  content: "←";
   display: inline-block;
   margin-right: 0.4rem;
 }
@@ -1312,5 +1350,4 @@
     border-width: 1px;
     font-size: 0.5rem;
   }
-
 }
