@@ -8,7 +8,10 @@ const TOTAL_SLOTS = 9;
 
 function getSlots(inventory, filter) {
   const items = inventory.filter((item) => item.category === filter);
-  return Array.from({ length: TOTAL_SLOTS }, (_, i) => items[i] ?? null);
+  const remainder = items.length % 3;
+  const padCount = remainder === 0 ? 0 : 3 - remainder;
+  const total = Math.max(items.length + padCount, TOTAL_SLOTS);
+  return Array.from({ length: total }, (_, i) => items[i] ?? null);
 }
 
 export default function Inventory({
@@ -21,6 +24,11 @@ export default function Inventory({
   onPrevCategory,
   onNextCategory,
 }) {
+  const equippedIds = new Set([
+    ...(character.gear ?? []).filter(Boolean).map((g) => g.id),
+    ...(character.accessories ?? []).map((a) => a.id),
+  ])
+
   return (
     <div className="detail-col detail-col--items">
       <h3 className="col-title">Inventory</h3>
@@ -58,6 +66,9 @@ export default function Inventory({
                 }`}
                 onMouseEnter={() => item && setActiveItem(item)}
               >
+                {item && equippedIds.has(item.id) && (
+                  <span className="equipped-badge">Equipped</span>
+                )}
                 {item?.image ? (
                   <img
                     src={item.image}

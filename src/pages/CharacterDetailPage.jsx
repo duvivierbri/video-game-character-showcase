@@ -78,11 +78,8 @@ export default function CharacterDetailPage({
 
         const accessoryIds = r.fields["Accessories"] ?? [];
         const partyIds = r.fields["PartyMembers"] ?? [];
-        const gearSlotIds = [
-          r.fields["Gear1"]?.[0] ?? null,
-          r.fields["Gear2"]?.[0] ?? null,
-          r.fields["Gear3"]?.[0] ?? null,
-        ];
+        const rawGearIds = r.fields["Gear"] ?? [];
+        const gearSlotIds = [0, 1, 2].map((i) => rawGearIds[i] ?? null);
 
         const [accRecords, partyRecords, ...gearRecords] = await Promise.all([
           accessoryIds.length > 0
@@ -103,23 +100,45 @@ export default function CharacterDetailPage({
           image: ar.fields.Image?.[0]?.thumbnails?.large?.url ?? null,
         }));
         if (accessories[0]) setActiveAccessory(accessories[0]);
-        setCharacter((prev) => ({
-          ...prev,
-          accessories,
-          gear: gearRecords.map((gr) =>
-            gr
-              ? {
-                  id: gr.id,
-                  name: gr.fields.Name ?? "—",
-                  description: gr.fields.Description ?? "",
-                  image:
-                    gr.fields.Image?.[0]?.thumbnails?.large?.url ??
-                    gr.fields.Image?.[0]?.url ??
-                    null,
-                }
-              : null
-          ),
-        }));
+
+        const gearEquipItems = gearRecords
+          .filter(Boolean)
+          .map((gr) => ({
+            id: gr.id,
+            name: gr.fields.Name ?? "—",
+            description: gr.fields.Description ?? "",
+            category: "Equipment",
+            image:
+              gr.fields.Image?.[0]?.thumbnails?.large?.url ??
+              gr.fields.Image?.[0]?.url ??
+              null,
+          }));
+        const accEquipItems = accessories.map((a) => ({ ...a, category: "Equipment" }));
+
+        setCharacter((prev) => {
+          const existingIds = new Set(prev.inventory.map((item) => item.id));
+          const newEquip = [...gearEquipItems, ...accEquipItems].filter(
+            (item) => !existingIds.has(item.id)
+          );
+          return {
+            ...prev,
+            accessories,
+            gear: gearRecords.map((gr) =>
+              gr
+                ? {
+                    id: gr.id,
+                    name: gr.fields.Name ?? "—",
+                    description: gr.fields.Description ?? "",
+                    image:
+                      gr.fields.Image?.[0]?.thumbnails?.large?.url ??
+                      gr.fields.Image?.[0]?.url ??
+                      null,
+                  }
+                : null
+            ),
+            inventory: [...prev.inventory, ...newEquip],
+          };
+        });
 
         setPartyMembers(
           partyRecords.map((pr) => ({
