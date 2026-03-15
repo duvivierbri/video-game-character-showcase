@@ -1,3 +1,5 @@
+import pointerFinger from '../../assets/art/PointerFinger.png'
+
 export const ITEM_CATEGORIES = [
   { name: "Items", filter: "Item" },
   { name: "Equipment", filter: "Equipment" },
@@ -59,25 +61,27 @@ export default function Inventory({
             className={`items-grid items-grid--slide-in-${slideDir}`}
           >
             {getSlots(character.inventory, ITEM_CATEGORIES[categoryIndex].filter).map((item, i) => (
-              <div
-                key={item?.id ?? `empty-${i}`}
-                className={`item-slot${
-                  item && activeItem?.id === item.id ? " item-slot--active" : ""
-                }`}
-                onMouseEnter={() => item && setActiveItem(item)}
-              >
-                {item && equippedIds.has(item.id) && (
-                  <span className="equipped-badge">Equipped</span>
-                )}
-                {item?.image ? (
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="item-slot-img"
-                  />
-                ) : item ? (
-                  <span>{item.name}</span>
-                ) : null}
+              <div key={item?.id ?? `empty-${i}`} className="item-slot-wrapper">
+                {item && <img src={pointerFinger} className="focus-indicator slot-hover-indicator" alt="" />}
+                <div
+                  className={`item-slot${
+                    item && activeItem?.id === item.id ? " item-slot--active" : ""
+                  }`}
+                  onMouseEnter={() => item && setActiveItem(item)}
+                >
+                  {item && equippedIds.has(item.id) && (
+                    <span className="equipped-badge">Equipped</span>
+                  )}
+                  {item?.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="item-slot-img"
+                    />
+                  ) : item ? (
+                    <span>{item.name}</span>
+                  ) : null}
+                </div>
               </div>
             ))}
           </div>

@@ -1,3 +1,5 @@
+import pointerFinger from '../../assets/art/PointerFinger.png'
+
 const TOTAL_SLOTS = 6;
 
 export default function Accessories({ character, activeAccessory, setActiveAccessory }) {
@@ -9,22 +11,24 @@ export default function Accessories({ character, activeAccessory, setActiveAcces
       <h4 className="col-title">Accessories</h4>
       <div className="accessories-grid">
         {slots.map((acc, i) => (
-          <div
-            key={acc?.id ?? `empty-${i}`}
-            className={`acc-slot${
-              acc && activeAccessory?.id === acc.id ? " acc-slot--active" : ""
-            }`}
-            onMouseEnter={() => acc && setActiveAccessory(acc)}
-          >
-            {acc?.image ? (
-              <img
-                src={acc.image}
-                alt={acc.name}
-                className="acc-slot-img"
-              />
-            ) : acc ? (
-              <span className="acc-slot-name">{acc.name}</span>
-            ) : null}
+          <div key={acc?.id ?? `empty-${i}`} className="acc-slot-wrapper">
+            {acc && <img src={pointerFinger} className="focus-indicator slot-hover-indicator" alt="" />}
+            <div
+              className={`acc-slot${
+                acc && activeAccessory?.id === acc.id ? " acc-slot--active" : ""
+              }`}
+              onMouseEnter={() => acc && setActiveAccessory(acc)}
+            >
+              {acc?.image ? (
+                <img
+                  src={acc.image}
+                  alt={acc.name}
+                  className="acc-slot-img"
+                />
+              ) : acc ? (
+                <span className="acc-slot-name">{acc.name}</span>
+              ) : null}
+            </div>
           </div>
         ))}
       </div>

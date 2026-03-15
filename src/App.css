@@ -527,6 +527,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
+  padding-top: 42px;
 }
 
 @keyframes slideInFromRight {
@@ -593,6 +594,19 @@
 
 .items-grid--slide-out-prev {
   animation: slideOutToRight 0.3s ease forwards;
+}
+
+.item-slot-wrapper {
+  position: relative;
+}
+
+.slot-hover-indicator {
+  display: none;
+}
+
+.item-slot-wrapper:hover .slot-hover-indicator,
+.acc-slot-wrapper:hover .slot-hover-indicator {
+  display: block;
 }
 
 .item-slot {
@@ -1074,6 +1088,10 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 0.4rem;
   flex-shrink: 0;
+}
+
+.acc-slot-wrapper {
+  position: relative;
 }
 
 .acc-slot {
