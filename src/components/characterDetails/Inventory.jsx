@@ -51,7 +51,13 @@ export default function Inventory({
             >
               {getSlots(character.inventory, ITEM_CATEGORIES[prevCategoryIndex].filter).map((item, i) => (
                 <div key={item?.id ?? `empty-${i}`} className="item-slot">
-                  {item?.name}
+                  <div className="item-slot-main">
+                    {item?.image && <img src={item.image} alt={item.name} className="item-slot-img" />}
+                  </div>
+                  <div className="item-slot-footer">
+                    <span className="item-slot-count">{item ? (item.quantity ?? 1) : ''}</span>
+                    <span className="item-slot-name">{item?.name ?? ''}</span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -72,15 +78,13 @@ export default function Inventory({
                   {item && equippedIds.has(item.id) && (
                     <span className="equipped-badge">Equipped</span>
                   )}
-                  {item?.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="item-slot-img"
-                    />
-                  ) : item ? (
-                    <span>{item.name}</span>
-                  ) : null}
+                  <div className="item-slot-main">
+                    {item?.image && <img src={item.image} alt={item.name} className="item-slot-img" />}
+                  </div>
+                  <div className="item-slot-footer">
+                    <span className="item-slot-count">{item ? (item.quantity ?? 1) : ''}</span>
+                    <span className="item-slot-name">{item?.name ?? ''}</span>
+                  </div>
                 </div>
               </div>
             ))}

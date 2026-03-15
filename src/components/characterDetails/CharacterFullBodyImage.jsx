@@ -39,15 +39,14 @@ export default function CharacterFullBodyImage({
           </div>
         )}
       </div>
-      <div
-        className={`gear-column${panel === 1 ? " gear-column--visible" : ""}`}
-      >
+      <div className={`gear-column${panel === 1 ? " gear-column--panel1" : " gear-column--panel0"}`}>
         {(character.gear ?? [null, null, null]).map((g, i) => (
           <GearCard
+            key={i}
             gearObject={g}
-            keyValue={i}
             activeGear={activeGear}
             setActiveGear={setActiveGear}
+            panel={panel}
           />
         ))}
       </div>

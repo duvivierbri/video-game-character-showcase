@@ -16,9 +16,9 @@ export default function PartyMemberCard({ member, onSelectCharacter }) {
                 className="party-slot-img"
               />
             ) : null}
-            <div className="basic-image-label party-card-label">
-              <span className="type-range-label">Type</span>
-              <span className="type-range-value">{member.type ?? "—"}</span>
+            <div className="party-type-box">
+              <span className="party-type-label">Type</span>
+              <span className="party-type-value">{member.type ?? "—"}</span>
             </div>
           </div>
         </div>
@@ -33,10 +33,9 @@ export default function PartyMemberCard({ member, onSelectCharacter }) {
               </div>
             ))}
           </div>
-          <div className="type-range-box">
-            <span className="type-range-label party-level">
-              Level <b>{member.level}</b>
-            </span>
+          <div className="party-level-box">
+            <span className="party-level-label">Level</span>
+            <span className="party-level-value"><b>{member.level}</b></span>
           </div>
         </div>
       </div>

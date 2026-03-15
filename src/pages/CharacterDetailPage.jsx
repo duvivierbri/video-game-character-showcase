@@ -38,6 +38,7 @@ export default function CharacterDetailPage({
         const descs = r.fields["Description (from Inventory)"] ?? [];
         const cats = r.fields["Category (from Inventory)"] ?? [];
         const imgs = r.fields["Image (from Inventory)"] ?? [];
+        const quantities = r.fields["Quantity (from Inventory)"] ?? [];
         const ids = r.fields["Inventory"] ?? [];
         const inventory = ids.map((id, i) => ({
           id,
@@ -45,6 +46,7 @@ export default function CharacterDetailPage({
           description: descs[i] ?? "",
           category: cats[i] ?? "",
           image: imgs[i]?.thumbnails?.large?.url ?? null,
+          quantity: quantities[i] ?? 1,
         }));
         const firstItem = inventory.find((item) => item.category === ITEM_CATEGORIES[0].filter);
         if (firstItem) setActiveItem(firstItem);
@@ -98,6 +100,7 @@ export default function CharacterDetailPage({
           name: ar.fields.Name ?? "—",
           description: ar.fields.Description ?? "",
           image: ar.fields.Image?.[0]?.thumbnails?.large?.url ?? null,
+          quantity: ar.fields.Quantity ?? 1,
         }));
         if (accessories[0]) setActiveAccessory(accessories[0]);
 
@@ -133,6 +136,7 @@ export default function CharacterDetailPage({
                       gr.fields.Image?.[0]?.thumbnails?.large?.url ??
                       gr.fields.Image?.[0]?.url ??
                       null,
+                    quantity: gr.fields.Quantity ?? 1,
                   }
                 : null
             ),

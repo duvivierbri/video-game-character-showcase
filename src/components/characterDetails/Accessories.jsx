@@ -19,15 +19,15 @@ export default function Accessories({ character, activeAccessory, setActiveAcces
               }`}
               onMouseEnter={() => acc && setActiveAccessory(acc)}
             >
-              {acc?.image ? (
-                <img
-                  src={acc.image}
-                  alt={acc.name}
-                  className="acc-slot-img"
-                />
-              ) : acc ? (
-                <span className="acc-slot-name">{acc.name}</span>
-              ) : null}
+              <div className="acc-slot-main">
+                {acc?.image && (
+                  <img src={acc.image} alt={acc.name} className="acc-slot-img" />
+                )}
+              </div>
+              <div className="acc-slot-footer">
+                <span className="acc-slot-count">{acc ? (acc.quantity ?? 1) : ''}</span>
+                <span className="acc-slot-name">{acc?.name ?? ''}</span>
+              </div>
             </div>
           </div>
         ))}
