@@ -221,8 +221,9 @@
 }
 
 .preview-panel {
-  flex: 1;
   align-self: stretch;
+  aspect-ratio: 191 / 298;
+  width: auto;
   border: 2px solid #000000;
   border-radius: 6px;
   display: flex;
@@ -231,7 +232,9 @@
   justify-content: center;
   overflow: hidden;
   padding: 0.75rem;
-  background: white;
+  background-image: url('./assets/art/FullBodyBg1.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .preview-fullbody {
@@ -249,10 +252,14 @@
 
 .preview-name {
   font-size: 1.1rem;
-  font-weight: 500;
+  font-weight: 700;
+  color: white;
   text-align: center;
   flex-shrink: 0;
-  padding-top: 0.5rem;
+  background-image: url('./assets/art/TextboxLong.png');
+  background-size: 100% 100%;
+  padding: 0.4rem 2rem;
+  width: 65%;
 }
 
 .card-headshot {
@@ -275,6 +282,9 @@
   font-weight: 700;
   text-align: center;
   color: white;
+  background-image: url('./assets/art/TextboxLong.png');
+  background-size: 100% 100%;
+  padding: 0.4rem 2rem;
 }
 
 .char-rows {
@@ -318,20 +328,21 @@
 .character-card {
   border: 2px solid #000000;
   border-radius: 6px;
-  width: 115px;
-  height: 145px;
+  width: 150px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 0.8rem;
   color: #555;
-  background: white;
-  transition: background 0.2s, box-shadow 0.2s;
+  background-image: url('./assets/art/CharacterSelectBox.png');
+  background-size: 100% 100%;
+  transition: box-shadow 0.2s;
 }
 
 .character-card:hover {
-  background: #f5f5f5;
+  filter: brightness(1.1);
 }
 
 .character-card--focused {
@@ -466,12 +477,41 @@
 .item-description-box {
   flex: 1;
   min-height: 0;
-  border: 2px solid #000000;
-  border-radius: 4px;
-  padding: 0.5rem;
+  background-image: url("./assets/art/descriptionBox.png");
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
   font-size: 14px;
-  color: #000000;
+}
+
+.desc-box-title {
+  padding: 6px 12px;
+  font-weight: bold;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 15%;
+  display: flex;
+  align-items: center;
+}
+
+.desc-box-body {
+  flex: 1;
+  padding: 6px 12px;
+  color: #cccccc;
   overflow-y: auto;
+  font-size: 0.8rem;
+  margin-bottom: 20px;
+}
+
+.desc-box-body p {
+  margin: 0;
+}
+
+.character-bio-box .desc-box-body {
+  font-size: 20px;
+  padding-bottom: 28px;
 }
 
 .col-title {
@@ -885,14 +925,13 @@
 
 .character-bio-box {
   flex: 1;
-  border: 1px solid #333;
-  border-radius: 6px;
-  padding: 1rem;
-  color: #000000;
-  font-size: 20px;
-  overflow-y: auto;
   min-height: 0;
-  background: white;
+  overflow: hidden;
+  background-image: url("./assets/art/descriptionBox.png");
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
 }
 
 .party-heading {
@@ -1130,14 +1169,13 @@
 
 .acc-description-box {
   flex: 1;
-  min-height: 0;
-  border: 2px solid #000000;
-  border-radius: 4px;
-  padding: 0.5rem;
+  min-height: 90px;
+  margin-top: -0.4rem;
+  background-image: url("./assets/art/descriptionBox.png");
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
   font-size: 14px;
-  color: #000000;
-  overflow-y: auto;
-  background: white;
 }
 
 .range-section h4 {
@@ -1241,7 +1279,7 @@
 
   .character-card {
     width: 72px;
-    height: 90px;
+    height: 72px;
     font-size: 0.6rem;
     border-width: 1px;
   }

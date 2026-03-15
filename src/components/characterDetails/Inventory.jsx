@@ -87,12 +87,10 @@ export default function Inventory({
           </div>
         </div>
         <div className="item-description-box">
-          {activeItem && (
-            <>
-              <strong>{activeItem.name}</strong>
-              {activeItem.description && <p>{activeItem.description}</p>}
-            </>
-          )}
+          <div className="desc-box-title">{activeItem?.name ?? ''}</div>
+          <div className="desc-box-body">
+            {activeItem?.description && <p>{activeItem.description}</p>}
+          </div>
         </div>
       </div>
     </div>

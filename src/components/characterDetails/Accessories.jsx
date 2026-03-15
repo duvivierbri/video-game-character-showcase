@@ -33,12 +33,10 @@ export default function Accessories({ character, activeAccessory, setActiveAcces
         ))}
       </div>
       <div className="acc-description-box">
-        {activeAccessory && (
-          <>
-            <strong>{activeAccessory.name}</strong>
-            {activeAccessory.description && <p>{activeAccessory.description}</p>}
-          </>
-        )}
+        <div className="desc-box-title">{activeAccessory?.name ?? ''}</div>
+        <div className="desc-box-body">
+          {activeAccessory?.description && <p>{activeAccessory.description}</p>}
+        </div>
       </div>
     </>
   );
