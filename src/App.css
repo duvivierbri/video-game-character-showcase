@@ -306,11 +306,11 @@
 
 .focus-indicator {
   position: absolute;
-  top: -18px;
+  top: -38px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.7rem;
-  color: #3b82f6;
+  width: 32px;
+  height: auto;
   pointer-events: none;
   animation: bounceIndicator 0.5s ease-in-out infinite alternate;
 }
