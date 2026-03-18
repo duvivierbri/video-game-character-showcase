@@ -24,6 +24,7 @@ export default function CharacterSelectPage({ onSelectCharacter, onBack }) {
           biography: r.fields.Biography ?? '',
           headshot: r.fields.Headshot?.[0]?.url ?? null,
           fullBody: r.fields['Full Body']?.[0]?.url ?? null,
+          illustration: r.fields['Illustration']?.[0]?.url ?? null,
         }))
         setCharacters(mapped)
       })
@@ -76,8 +77,8 @@ export default function CharacterSelectPage({ onSelectCharacter, onBack }) {
         <div className="preview-panel">
           {activeChar && (
             <>
-              {activeChar.fullBody
-                ? <img className="preview-fullbody" src={activeChar.fullBody} alt={activeChar.name} />
+              {activeChar.illustration
+                ? <img className="preview-fullbody" src={activeChar.illustration} alt={activeChar.name} />
                 : <span className="preview-placeholder">No image</span>
               }
               <p className="preview-name">{activeChar.name}</p>

@@ -747,13 +747,7 @@
   line-height: 1.1;
   text-align: center;
   color: white;
-  background-image: url("./assets/art/TextboxLong.png");
-  background-size: 100% 100%;
-  padding: 0.6rem 2rem;
-  width: 65%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-top: -0.5rem;
 }
 
 .char-vitals {
