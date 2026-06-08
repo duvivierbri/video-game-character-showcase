@@ -81,6 +81,16 @@
   transition: opacity 0.2s;
 }
 
+.nav-btn::after {
+  content: "→";
+  display: inline-block;
+  margin-left: 0.4rem;
+}
+
+.nav-btn:hover::after {
+  animation: bounceRight 0.4s ease-in-out infinite alternate;
+}
+
 /* ===== Landing Page ===== */
 .landing-page {
   display: flex;

@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react'
 import LandingPage from './pages/LandingPage'
 import CharacterSelectPage from './pages/CharacterSelectPage'
 import CharacterDetailPage from './pages/CharacterDetailPage'
+import { fetchAllRecords } from './lib/airtable'
 import './App.css'
+
+const COLS = 5
 
 const pathToPage = (path) => {
   if (path === '/character-select') return 'select'
@@ -22,6 +25,27 @@ function App() {
   const [characterName, setCharacterName] = useState(
     () => nameFromPath(window.location.pathname)
   )
+  const [characters, setCharacters] = useState([])
+  const [charsLoading, setCharsLoading] = useState(true)
+  const [charsError, setCharsError] = useState(null)
+
+  useEffect(() => {
+    fetchAllRecords()
+      .then((records) =>
+        setCharacters(
+          records.map((r) => ({
+            id: r.id,
+            name: r.fields.Name ?? '—',
+            biography: r.fields.Biography ?? '',
+            headshot: r.fields.Headshot?.[0]?.url ?? null,
+            fullBody: r.fields['Full Body']?.[0]?.url ?? null,
+            illustration: r.fields['Illustration']?.[0]?.url ?? null,
+          }))
+        )
+      )
+      .catch((err) => setCharsError(err.message))
+      .finally(() => setCharsLoading(false))
+  }, [])
 
   useEffect(() => {
     const onPopState = () => {
@@ -39,6 +63,16 @@ function App() {
     setCharacterName(nameFromPath(path))
   }
 
+  const getNextCharacterName = (currentName) => {
+    if (characters.length === 0) return null
+    const idx = characters.findIndex((c) => c.name === currentName)
+    if (idx === -1) return null
+    const nextDown = idx + COLS
+    if (nextDown < characters.length) return characters[nextDown].name
+    const nextCol = (idx % COLS) + 1
+    return characters[nextCol % COLS]?.name ?? null
+  }
+
   return (
     <div className="app">
       <div className="rotate-overlay">
@@ -52,6 +86,9 @@ function App() {
       )}
       {page === 'select' && (
         <CharacterSelectPage
+          characters={characters}
+          loading={charsLoading}
+          error={charsError}
           onSelectCharacter={(char) => navigate(`/character/${encodeURIComponent(char.name)}`)}
           onBack={() => navigate('/welcome')}
         />
@@ -61,7 +98,10 @@ function App() {
           key={characterName}
           characterName={characterName}
           onBack={() => navigate('/character-select')}
-          onStart={() => navigate('/welcome')}
+          onNextCharacter={() => {
+            const next = getNextCharacterName(characterName)
+            if (next) navigate(`/character/${encodeURIComponent(next)}`)
+          }}
           onSelectCharacter={(name) => navigate(`/character/${encodeURIComponent(name)}`)}
         />
       )}

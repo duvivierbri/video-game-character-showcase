@@ -1,36 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import CharacterCard from '../components/characterSelect/CharacterCard'
-import { fetchAllRecords } from '../lib/airtable'
 
 const COLS = 5
 
-export default function CharacterSelectPage({ onSelectCharacter, onBack }) {
-  const [characters, setCharacters] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+export default function CharacterSelectPage({ characters, loading, error, onSelectCharacter, onBack }) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const activeIndexRef = useRef(activeIndex)
   const onSelectRef = useRef(onSelectCharacter)
   useEffect(() => { activeIndexRef.current = activeIndex }, [activeIndex])
   useEffect(() => { onSelectRef.current = onSelectCharacter }, [onSelectCharacter])
-
-  useEffect(() => {
-    fetchAllRecords()
-      .then((records) => {
-        const mapped = records.map((r) => ({
-          id: r.id,
-          name: r.fields.Name ?? '—',
-          biography: r.fields.Biography ?? '',
-          headshot: r.fields.Headshot?.[0]?.url ?? null,
-          fullBody: r.fields['Full Body']?.[0]?.url ?? null,
-          illustration: r.fields['Illustration']?.[0]?.url ?? null,
-        }))
-        setCharacters(mapped)
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [])
 
   useEffect(() => {
     if (characters.length === 0) return

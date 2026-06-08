@@ -12,7 +12,7 @@ const SLIDE_DURATION = 300;
 
 export default function CharacterDetailPage({
   characterName,
-  onStart,
+  onNextCharacter,
   onBack,
   onSelectCharacter,
 }) {
@@ -214,8 +214,8 @@ export default function CharacterDetailPage({
         <button className="back-btn" onClick={onBack}>
           Back
         </button>
-        <button className="nav-btn" onClick={onStart}>
-          Welcome Page
+        <button className="nav-btn" onClick={onNextCharacter}>
+          Next Character
         </button>
       </div>
 
