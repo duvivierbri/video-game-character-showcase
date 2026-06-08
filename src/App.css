@@ -416,6 +416,18 @@
   width: auto;
 }
 
+/* Panel 0: image can overflow left toward stats — fade the left edge */
+.character-image-box--small .character-fullbody-img {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 160px);
+  mask-image: linear-gradient(to right, transparent, black 160px);
+}
+
+/* Panel 1: image can overflow right toward bio — fade the right edge */
+.character-image-box:not(.character-image-box--small) .character-fullbody-img {
+  -webkit-mask-image: linear-gradient(to left, transparent, black 160px);
+  mask-image: linear-gradient(to left, transparent, black 160px);
+}
+
 .detail-topbar {
   flex-shrink: 0;
   display: flex;
