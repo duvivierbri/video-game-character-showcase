@@ -9,11 +9,14 @@ const headers = {
   'Content-Type': 'application/json',
 }
 
-/**
- * Fetch all records from the table.
- * Airtable paginates at 100 records — this handles multiple pages automatically.
- */
+// In-memory caches — live for the lifetime of the browser session
+const _allRecordsCache = { value: null }
+const _byNameCache = new Map()   // character name  -> full record
+const _recordCache = new Map()   // airtable record ID -> full record
+
 export async function fetchAllRecords() {
+  if (_allRecordsCache.value) return _allRecordsCache.value
+
   const records = []
   let offset = undefined
 
@@ -30,13 +33,18 @@ export async function fetchAllRecords() {
     offset = data.offset
   } while (offset)
 
+  _allRecordsCache.value = records
+  records.forEach(r => {
+    if (r.fields.Name) _byNameCache.set(r.fields.Name, r)
+    _recordCache.set(r.id, r)
+  })
+
   return records
 }
 
-/**
- * Fetch a single record by exact Name match.
- */
 export async function fetchRecordByName(name) {
+  if (_byNameCache.has(name)) return _byNameCache.get(name)
+
   const url = new URL(BASE_URL)
   url.searchParams.set('filterByFormula', `{Name}="${name.replace(/"/g, '\\"')}"`)
   url.searchParams.set('maxRecords', '1')
@@ -44,22 +52,47 @@ export async function fetchRecordByName(name) {
   if (!res.ok) throw new Error(`Airtable error: ${res.status} ${res.statusText}`)
   const data = await res.json()
   if (!data.records.length) throw new Error(`Character "${name}" not found`)
-  return data.records[0]
+
+  const record = data.records[0]
+  _byNameCache.set(name, record)
+  _recordCache.set(record.id, record)
+  return record
 }
 
-/**
- * Fetch a single record by its Airtable record ID.
- */
 export async function fetchRecord(recordId) {
+  if (_recordCache.has(recordId)) return _recordCache.get(recordId)
+
   const res = await fetch(`${BASE_URL}/${recordId}`, { headers })
   if (!res.ok) throw new Error(`Airtable error: ${res.status} ${res.statusText}`)
-  return res.json()
+  const record = await res.json()
+  _recordCache.set(record.id, record)
+  return record
 }
 
 /**
- * Create a new record. Pass a plain object of field values.
- * Example: createRecord({ Name: 'Hero', Type: 'Warrior' })
+ * Fetch multiple records by ID in a single API call.
+ * Null/undefined entries in ids are preserved as null in the output.
+ * Already-cached records are returned from cache with no API call.
  */
+export async function fetchRecordsByIds(ids) {
+  const nonNullIds = ids.filter(Boolean)
+  if (nonNullIds.length === 0) return ids.map(() => null)
+
+  const uncachedIds = nonNullIds.filter(id => !_recordCache.has(id))
+
+  if (uncachedIds.length > 0) {
+    const formula = `OR(${uncachedIds.map(id => `RECORD_ID()='${id}'`).join(',')})`
+    const url = new URL(BASE_URL)
+    url.searchParams.set('filterByFormula', formula)
+    const res = await fetch(url.toString(), { headers })
+    if (!res.ok) throw new Error(`Airtable error: ${res.status} ${res.statusText}`)
+    const data = await res.json()
+    data.records.forEach(r => _recordCache.set(r.id, r))
+  }
+
+  return ids.map(id => (id ? (_recordCache.get(id) ?? null) : null))
+}
+
 export async function createRecord(fields) {
   const res = await fetch(BASE_URL, {
     method: 'POST',
@@ -70,9 +103,6 @@ export async function createRecord(fields) {
   return res.json()
 }
 
-/**
- * Update an existing record (PATCH — only provided fields are changed).
- */
 export async function updateRecord(recordId, fields) {
   const res = await fetch(`${BASE_URL}/${recordId}`, {
     method: 'PATCH',
@@ -83,9 +113,6 @@ export async function updateRecord(recordId, fields) {
   return res.json()
 }
 
-/**
- * Delete a record by its Airtable record ID.
- */
 export async function deleteRecord(recordId) {
   const res = await fetch(`${BASE_URL}/${recordId}`, {
     method: 'DELETE',
