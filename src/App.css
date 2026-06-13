@@ -502,6 +502,8 @@
 
 .detail-col--stats {
   flex: 0 0 30vw;
+  overflow: visible;
+  z-index: 2;
 }
 
 .detail-col--character {
@@ -887,6 +889,16 @@
   max-width: 33vw;
 }
 
+.gear-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+}
+
+.gear-row .gear-slot-wrapper {
+  flex: 1;
+}
+
 .gear-column {
   position: absolute;
   width: 110px;
@@ -996,7 +1008,7 @@
   line-height: 1.4;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   pointer-events: none;
-  z-index: 100;
+  z-index: 999;
 }
 
 .gear-tooltip--left {

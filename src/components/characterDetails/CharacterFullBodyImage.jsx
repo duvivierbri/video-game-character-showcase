@@ -1,13 +1,6 @@
-import GearCard from "./GearCard";
-
-export default function CharacterFullBodyImage({
-  character,
-  panel,
-  activeGear,
-  setActiveGear,
-}) {
+export default function CharacterFullBodyImage({ character, panel }) {
   return (
-    <div className="char-body">
+    <div className={`char-body char-body--panel${panel}`}>
       <div
         className={`character-image-box${
           panel === 0 ? " character-image-box--small" : ""
@@ -38,17 +31,6 @@ export default function CharacterFullBodyImage({
             )}
           </div>
         )}
-      </div>
-      <div className={`gear-column${panel === 1 ? " gear-column--panel1" : " gear-column--panel0"}`}>
-        {(character.gear ?? [null, null, null]).map((g, i) => (
-          <GearCard
-            key={i}
-            gearObject={g}
-            activeGear={activeGear}
-            setActiveGear={setActiveGear}
-            panel={panel}
-          />
-        ))}
       </div>
     </div>
   );

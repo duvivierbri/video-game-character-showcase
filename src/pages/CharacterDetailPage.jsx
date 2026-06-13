@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Accessories from "../components/characterDetails/Accessories";
 import Biography from "../components/characterDetails/Biography";
 import CharacterFullBodyImage from "../components/characterDetails/CharacterFullBodyImage";
+import GearCard from "../components/characterDetails/GearCard";
 import Inventory, { ITEM_CATEGORIES } from "../components/characterDetails/Inventory";
 import Stats from "../components/characterDetails/Stats";
 import Vitals from "../components/characterDetails/Vitals";
@@ -244,9 +245,21 @@ export default function CharacterDetailPage({
             onNextCategory={nextCategory}
           />
 
-          {/* Stats & Accessories — middle column */}
+          {/* Stats, Gear & Accessories — middle column */}
           <div className="detail-col detail-col--stats">
             <Stats character={character} />
+            <h4 className="col-title">Gear</h4>
+            <div className="gear-row">
+              {(character.gear ?? [null, null, null]).map((g, i) => (
+                <GearCard
+                  key={i}
+                  gearObject={g}
+                  activeGear={activeGear}
+                  setActiveGear={setActiveGear}
+                  panel={1}
+                />
+              ))}
+            </div>
             <Accessories
               character={character}
               activeAccessory={activeAccessory}
@@ -261,8 +274,6 @@ export default function CharacterDetailPage({
             <CharacterFullBodyImage
               character={character}
               panel={panel}
-              activeGear={activeGear}
-              setActiveGear={setActiveGear}
             />
           </div>
 

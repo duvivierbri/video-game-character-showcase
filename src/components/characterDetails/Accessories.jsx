@@ -1,6 +1,6 @@
 import pointerFinger from '../../assets/art/PointerFinger.png'
 
-const TOTAL_SLOTS = 6;
+const TOTAL_SLOTS = 3;
 
 export default function Accessories({ character, activeAccessory, setActiveAccessory }) {
   const accessories = character.accessories ?? [];
