@@ -268,7 +268,7 @@ export default function CharacterDetailPage({
           </div>
 
           {/* Character — 50vw (shared between both panels) */}
-          <div className="detail-col detail-col--character">
+          <div className={`detail-col detail-col--character detail-col--character-p${panel}`}>
             <h2 className="character-name">{character.name}</h2>
             <Vitals character={character} panel={panel} />
             <CharacterFullBodyImage

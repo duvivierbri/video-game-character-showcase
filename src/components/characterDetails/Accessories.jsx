@@ -8,7 +8,7 @@ export default function Accessories({ character, activeAccessory, setActiveAcces
 
   return (
     <>
-      <h4 className="col-title">Accessories</h4>
+      <h4 className="col-title">Equipped Accessories</h4>
       <div className="accessories-grid">
         {slots.map((acc, i) => (
           <div key={acc?.id ?? `empty-${i}`} className="acc-slot-wrapper">

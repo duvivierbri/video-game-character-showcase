@@ -11,12 +11,12 @@ export default function Vitals({ character, panel }) {
         <span className="vital">
           <strong>Lvl:</strong> {character.level}
         </span>
-        <span className="vital">
-          <strong>Exp:</strong> {character.exp}
-        </span>
       </div>
 
       <div className="next-level-row">
+        <span className="vital">
+          <strong>Exp:</strong> {character.exp}
+        </span>
         <span className="next-level-label">Next Level:</span>
         <div className="next-level-bar-container">
           <div

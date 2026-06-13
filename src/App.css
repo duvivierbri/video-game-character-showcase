@@ -435,17 +435,6 @@
   width: auto;
 }
 
-/* Panel 0: image can overflow left toward stats — fade the left edge */
-.character-image-box--small .character-fullbody-img {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 160px);
-  mask-image: linear-gradient(to right, transparent, black 160px);
-}
-
-/* Panel 1: image can overflow right toward bio — fade the right edge */
-.character-image-box:not(.character-image-box--small) .character-fullbody-img {
-  -webkit-mask-image: linear-gradient(to left, transparent, black 160px);
-  mask-image: linear-gradient(to left, transparent, black 160px);
-}
 
 .detail-topbar {
   flex-shrink: 0;
@@ -512,8 +501,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: visible;
+  overflow: hidden;
   z-index: 1;
+}
+
+.detail-col--character-p0 {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 80px);
+  mask-image: linear-gradient(to right, transparent 0, black 80px);
+}
+
+.detail-col--character-p1 {
+  -webkit-mask-image: linear-gradient(to left, transparent 0, black 80px);
+  mask-image: linear-gradient(to left, transparent 0, black 80px);
 }
 
 .detail-col--bio {
@@ -617,13 +616,36 @@
   opacity: 0.7;
 }
 
+.equipped-sort-toggle {
+  align-self: flex-end;
+  background: transparent;
+  border: 1px solid #6e38f6;
+  border-radius: 999px;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  opacity: 0.6;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.equipped-sort-toggle--active {
+  background: #6e38f6;
+  opacity: 1;
+}
+
+.equipped-sort-toggle:hover {
+  opacity: 1;
+}
+
 .items-grid-wrapper {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
-  padding-top: 28px;
 }
 
 @keyframes slideInFromRight {
@@ -707,15 +729,15 @@
 }
 
 .item-slot {
-  border: none;
+  border: 2px solid #6e38f6;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  background-image: url("./assets/art/itemBox.png");
-  background-size: 100% 100%;
+  background-color: transparent;
+  border-radius: 6px;
   overflow: hidden;
-  transition: filter 0.15s;
+  transition: background-color 0.15s;
   position: relative;
 }
 
@@ -736,7 +758,7 @@
 
 .item-slot:hover,
 .item-slot--active {
-  filter: brightness(1.15);
+  background-color: rgba(110, 56, 246, 0.25);
 }
 
 .item-slot-main {
@@ -776,13 +798,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.5rem;
+  font-size: 0.65rem;
   font-weight: 700;
   color: white;
   text-align: center;
   line-height: 1.1;
   padding: 0 2px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .character-name {
@@ -797,6 +821,7 @@
 
 .char-vitals {
   flex-shrink: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -845,7 +870,7 @@
 }
 
 .next-level-bar-container {
-  flex: 1;
+  flex: 3;
   height: 16px;
   background: transparent;
   border: 2px solid #6e38f6;
@@ -936,8 +961,9 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  background-image: url("./assets/art/itemBox.png");
-  background-size: 100% 100%;
+  background-color: transparent;
+  border-radius: 6px;
+  border: 2px solid #6e38f6;
   overflow: hidden;
   transition: filter 0.15s;
   position: relative;
@@ -985,13 +1011,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.5rem;
+  font-size: 0.65rem;
   font-weight: 700;
   color: white;
   text-align: center;
   line-height: 1.1;
   padding: 0 2px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .gear-tooltip {
@@ -1345,13 +1373,13 @@
 }
 
 .acc-slot {
-  border: none;
+  border: 2px solid #6e38f6;
   aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  background-image: url("./assets/art/itemBox.png");
-  background-size: 100% 100%;
+  background-color: transparent;
+  border-radius: 6px;
   overflow: hidden;
   transition: filter 0.15s;
 }
@@ -1398,13 +1426,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.5rem;
+  font-size: 0.65rem;
   font-weight: 700;
   color: white;
   text-align: center;
   line-height: 1.1;
   padding: 0 2px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .acc-description-box {

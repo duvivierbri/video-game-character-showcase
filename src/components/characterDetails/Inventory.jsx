@@ -1,4 +1,4 @@
-import pointerFinger from '../../assets/art/PointerFinger.png'
+import { useState } from 'react'
 
 export const ITEM_CATEGORIES = [
   { name: "Items", filter: "Item" },
@@ -8,8 +8,14 @@ export const ITEM_CATEGORIES = [
 
 const TOTAL_SLOTS = 9;
 
-function getSlots(inventory, filter) {
-  const items = inventory.filter((item) => item.category === filter);
+function getSlots(inventory, filter, equippedIds = null) {
+  let items = inventory.filter((item) => item.category === filter);
+  if (equippedIds) {
+    items = [
+      ...items.filter((i) => equippedIds.has(i.id)),
+      ...items.filter((i) => !equippedIds.has(i.id)),
+    ];
+  }
   const remainder = items.length % 3;
   const padCount = remainder === 0 ? 0 : 3 - remainder;
   const total = Math.max(items.length + padCount, TOTAL_SLOTS);
@@ -26,6 +32,8 @@ export default function Inventory({
   onPrevCategory,
   onNextCategory,
 }) {
+  const [sortEquippedFirst, setSortEquippedFirst] = useState(false);
+
   const equippedIds = new Set([
     ...(character.gear ?? []).filter(Boolean).map((g) => g.id),
     ...(character.accessories ?? []).map((a) => a.id),
@@ -44,12 +52,18 @@ export default function Inventory({
             ›
           </button>
         </div>
-        <div className="items-grid-wrapper">
+        <button
+          className={`equipped-sort-toggle${sortEquippedFirst ? " equipped-sort-toggle--active" : ""}`}
+          onClick={() => setSortEquippedFirst((v) => !v)}
+        >
+          Equipped First
+        </button>
+        <div className="items-grid-wrapper" onMouseLeave={() => setActiveItem(null)}>
           {prevCategoryIndex !== null && (
             <div
               className={`items-grid items-grid--slide-out-${slideDir}`}
             >
-              {getSlots(character.inventory, ITEM_CATEGORIES[prevCategoryIndex].filter).map((item, i) => (
+              {getSlots(character.inventory, ITEM_CATEGORIES[prevCategoryIndex].filter, sortEquippedFirst ? equippedIds : null).map((item, i) => (
                 <div key={item?.id ?? `empty-${i}`} className="item-slot">
                   <div className="item-slot-main">
                     {item?.image && <img src={item.image} alt={item.name} className="item-slot-img" />}
@@ -66,9 +80,8 @@ export default function Inventory({
             key={categoryIndex}
             className={`items-grid items-grid--slide-in-${slideDir}`}
           >
-            {getSlots(character.inventory, ITEM_CATEGORIES[categoryIndex].filter).map((item, i) => (
+            {getSlots(character.inventory, ITEM_CATEGORIES[categoryIndex].filter, sortEquippedFirst ? equippedIds : null).map((item, i) => (
               <div key={item?.id ?? `empty-${i}`} className="item-slot-wrapper">
-                {item && <img src={pointerFinger} className="focus-indicator slot-hover-indicator" alt="" />}
                 <div
                   className={`item-slot${
                     item && activeItem?.id === item.id ? " item-slot--active" : ""
