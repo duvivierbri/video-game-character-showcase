@@ -91,6 +91,25 @@
   animation: bounceRight 0.4s ease-in-out infinite alternate;
 }
 
+.nav-btn--prev::after {
+  content: none;
+}
+
+.nav-btn--prev::before {
+  content: "←";
+  display: inline-block;
+  margin-right: 0.4rem;
+}
+
+.nav-btn--prev:hover::before {
+  animation: bounceLeft 0.4s ease-in-out infinite alternate;
+}
+
+.topbar-nav-group {
+  display: flex;
+  align-items: center;
+}
+
 /* ===== Landing Page ===== */
 .landing-page {
   display: flex;

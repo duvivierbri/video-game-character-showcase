@@ -73,6 +73,18 @@ function App() {
     return characters[nextCol % COLS]?.name ?? null
   }
 
+  const getPrevCharacterName = (currentName) => {
+    if (characters.length === 0) return null
+    const idx = characters.findIndex((c) => c.name === currentName)
+    if (idx === -1) return null
+    const prevUp = idx - COLS
+    if (prevUp >= 0) return characters[prevUp].name
+    // No character above — go to bottom of previous column
+    const prevCol = (idx % COLS - 1 + COLS) % COLS
+    const lastInPrevCol = prevCol + Math.floor((characters.length - 1 - prevCol) / COLS) * COLS
+    return characters[lastInPrevCol]?.name ?? null
+  }
+
   return (
     <div className="app">
       <div className="rotate-overlay">
@@ -98,6 +110,10 @@ function App() {
           key={characterName}
           characterName={characterName}
           onBack={() => navigate('/character-select')}
+          onPrevCharacter={() => {
+            const prev = getPrevCharacterName(characterName)
+            if (prev) navigate(`/character/${encodeURIComponent(prev)}`)
+          }}
           onNextCharacter={() => {
             const next = getNextCharacterName(characterName)
             if (next) navigate(`/character/${encodeURIComponent(next)}`)

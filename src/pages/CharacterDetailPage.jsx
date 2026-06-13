@@ -5,13 +5,14 @@ import CharacterFullBodyImage from "../components/characterDetails/CharacterFull
 import Inventory, { ITEM_CATEGORIES } from "../components/characterDetails/Inventory";
 import Stats from "../components/characterDetails/Stats";
 import Vitals from "../components/characterDetails/Vitals";
-import { fetchRecordsByIds, fetchRecordByName } from "../lib/airtable";
+import { fetchRecord, fetchRecordByName } from "../lib/airtable";
 
 const ITEM_CATEGORIES_LENGTH = 3;
 const SLIDE_DURATION = 300;
 
 export default function CharacterDetailPage({
   characterName,
+  onPrevCharacter,
   onNextCharacter,
   onBack,
   onSelectCharacter,
@@ -83,16 +84,17 @@ export default function CharacterDetailPage({
         const rawGearIds = r.fields["Gear"] ?? [];
         const gearSlotIds = [0, 1, 2].map((i) => rawGearIds[i] ?? null);
 
-        // Fetch all linked records in a single API call
-        const allLinkedIds = [...accessoryIds, ...partyIds, ...gearSlotIds];
-        const allFetched = await fetchRecordsByIds(allLinkedIds);
-        const byId = Object.fromEntries(
-          allFetched.filter(Boolean).map((rec) => [rec.id, rec])
-        );
-
-        const accRecords = accessoryIds.map((id) => byId[id]).filter(Boolean);
-        const partyRecords = partyIds.map((id) => byId[id]).filter(Boolean);
-        const gearRecords = gearSlotIds.map((id) => (id ? byId[id] ?? null : null));
+        const [accRecords, partyRecords, ...gearRecords] = await Promise.all([
+          accessoryIds.length > 0
+            ? Promise.all(accessoryIds.map((id) => fetchRecord(id)))
+            : Promise.resolve([]),
+          partyIds.length > 0
+            ? Promise.all(partyIds.map((id) => fetchRecord(id)))
+            : Promise.resolve([]),
+          ...gearSlotIds.map((id) =>
+            id ? fetchRecord(id) : Promise.resolve(null)
+          ),
+        ]);
 
         const accessories = accRecords.map((ar) => ({
           id: ar.id,
@@ -213,9 +215,14 @@ export default function CharacterDetailPage({
         <button className="back-btn" onClick={onBack}>
           Back
         </button>
-        <button className="nav-btn" onClick={onNextCharacter}>
-          Next Character
-        </button>
+        <div className="topbar-nav-group">
+          <button className="nav-btn nav-btn--prev" onClick={onPrevCharacter}>
+            Previous Character
+          </button>
+          <button className="nav-btn" onClick={onNextCharacter}>
+            Next Character
+          </button>
+        </div>
       </div>
 
       <div className="detail-scroll-container">
