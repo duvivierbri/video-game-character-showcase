@@ -279,7 +279,7 @@ export default function CharacterDetailPage({
             className="panel-nav-btn panel-nav-btn--next"
             onClick={() => setPanel(1)}
           >
-            Gear and Bio
+            Bio and Party
           </button>
         )}
         {panel === 1 && (
