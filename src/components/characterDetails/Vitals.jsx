@@ -14,6 +14,16 @@ export default function Vitals({ character, panel }) {
       </div>
 
       <div className="next-level-row">
+        <span className="next-level-label">Armor:</span>
+        <div className="next-level-bar-container">
+          <div
+            className="next-level-bar armor-bar"
+            style={{ width: `${character.armor}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="next-level-row">
         <span className="vital">
           <strong>Exp:</strong> {character.exp}
         </span>

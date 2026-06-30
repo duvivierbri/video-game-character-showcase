@@ -8,7 +8,7 @@ import Stats from "../components/characterDetails/Stats";
 import Vitals from "../components/characterDetails/Vitals";
 import { fetchRecord, fetchRecordByName } from "../lib/airtable";
 
-const ITEM_CATEGORIES_LENGTH = 3;
+const ITEM_CATEGORIES_LENGTH = 4;
 const SLIDE_DURATION = 300;
 
 export default function CharacterDetailPage({
@@ -41,6 +41,7 @@ export default function CharacterDetailPage({
         const cats = r.fields["Category (from Inventory)"] ?? [];
         const imgs = r.fields["Image (from Inventory)"] ?? [];
         const quantities = r.fields["Quantity (from Inventory)"] ?? [];
+        const rarities = r.fields["Rarity (from Inventory)"] ?? [];
         const ids = r.fields["Inventory"] ?? [];
         const inventory = ids.map((id, i) => ({
           id,
@@ -49,6 +50,7 @@ export default function CharacterDetailPage({
           category: cats[i] ?? "",
           image: imgs[i]?.thumbnails?.large?.url ?? null,
           quantity: quantities[i] ?? 1,
+          rarity: rarities[i] ?? null,
         }));
         const firstItem = inventory.find((item) => item.category === ITEM_CATEGORIES[0].filter);
         if (firstItem) setActiveItem(firstItem);
@@ -78,6 +80,7 @@ export default function CharacterDetailPage({
           level: r.fields.Level ?? 0,
           exp: r.fields.Experience ?? 0,
           nextLevel: r.fields["Next Level"] ?? 0,
+          armor: r.fields.Armor ?? 0,
         });
 
         const accessoryIds = r.fields["Accessories"] ?? [];
@@ -193,7 +196,9 @@ export default function CharacterDetailPage({
     setSlideDir(dir);
     setCategoryIndex(newIndex);
     const filter = ITEM_CATEGORIES[newIndex].filter;
-    const first = character.inventory.find((item) => item.category === filter);
+    const first = filter === null
+      ? character.inventory[0] ?? null
+      : character.inventory.find((item) => item.category === filter);
     setActiveItem(first ?? null);
     timeoutRef.current = setTimeout(
       () => setPrevCategoryIndex(null),

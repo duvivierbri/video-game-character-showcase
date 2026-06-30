@@ -1,15 +1,16 @@
 import { useState } from 'react'
 
 export const ITEM_CATEGORIES = [
-  { name: "Items", filter: "Item" },
+  { name: "All Items", filter: null },
   { name: "Equipment", filter: "Equipment" },
-  { name: "Special", filter: "Special" },
+  { name: "Key Items", filter: "Special" },
+  { name: "Consumables", filter: "Consumable" },
 ];
 
 const TOTAL_SLOTS = 9;
 
 function getSlots(inventory, filter, equippedIds = null) {
-  let items = inventory.filter((item) => item.category === filter);
+  let items = filter === null ? [...inventory] : inventory.filter((item) => item.category === filter);
   if (equippedIds) {
     items = [
       ...items.filter((i) => equippedIds.has(i.id)),
@@ -37,7 +38,7 @@ export default function Inventory({
   const equippedIds = new Set([
     ...(character.gear ?? []).filter(Boolean).map((g) => g.id),
     ...(character.accessories ?? []).map((a) => a.id),
-  ])
+  ]);
 
   return (
     <div className="detail-col detail-col--items">
@@ -60,9 +61,7 @@ export default function Inventory({
         </button>
         <div className="items-grid-wrapper" onMouseLeave={() => setActiveItem(null)}>
           {prevCategoryIndex !== null && (
-            <div
-              className={`items-grid items-grid--slide-out-${slideDir}`}
-            >
+            <div className={`items-grid items-grid--slide-out-${slideDir}`}>
               {getSlots(character.inventory, ITEM_CATEGORIES[prevCategoryIndex].filter, sortEquippedFirst ? equippedIds : null).map((item, i) => (
                 <div key={item?.id ?? `empty-${i}`} className="item-slot">
                   <div className="item-slot-main">
@@ -90,6 +89,9 @@ export default function Inventory({
                 >
                   {item && equippedIds.has(item.id) && (
                     <span className="equipped-badge">Equipped</span>
+                  )}
+                  {item && item.category === "Special" && item.rarity && (
+                    <span className={`rarity-star rarity-star--${item.rarity.toLowerCase()}`}>★</span>
                   )}
                   <div className="item-slot-main">
                     {item?.image && <img src={item.image} alt={item.name} className="item-slot-img" />}

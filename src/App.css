@@ -505,15 +505,6 @@
   z-index: 1;
 }
 
-.detail-col--character-p0 {
-  -webkit-mask-image: linear-gradient(to right, transparent 0, black 80px);
-  mask-image: linear-gradient(to right, transparent 0, black 80px);
-}
-
-.detail-col--character-p1 {
-  -webkit-mask-image: linear-gradient(to left, transparent 0, black 80px);
-  mask-image: linear-gradient(to left, transparent 0, black 80px);
-}
 
 .detail-col--bio {
   flex: 0 0 50vw;
@@ -743,18 +734,32 @@
 
 .equipped-badge {
   position: absolute;
-  top: 3px;
-  right: 3px;
+  top: 5%;
+  right: 5%;
   background: #3b82f6;
   color: white;
-  font-size: 0.4rem;
+  font-size: clamp(0.4rem, 0.55vw, 0.55rem);
   font-weight: 700;
-  padding: 1px 4px;
+  padding: 0.1em 0.35em;
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   pointer-events: none;
 }
+
+.rarity-star {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-size: clamp(0.5rem, 0.8vw, 0.7rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.rarity-star--legendary { color: #60a5fa; }
+.rarity-star--rare      { color: #fbbf24; }
+.rarity-star--uncommon  { color: #9ca3af; }
+.rarity-star--common    { color: #92400e; }
 
 .item-slot:hover,
 .item-slot--active {
@@ -884,6 +889,10 @@
   border-radius: 2px;
 }
 
+.armor-bar {
+  background: #6e38f6;
+}
+
 .char-body {
   flex: 1;
   min-height: 0;
@@ -891,6 +900,17 @@
   justify-content: center;
   position: relative;
   width: 100%;
+  overflow: hidden;
+}
+
+.char-body--panel0 {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 80px);
+  mask-image: linear-gradient(to right, transparent 0, black 80px);
+}
+
+.char-body--panel1 {
+  -webkit-mask-image: linear-gradient(to left, transparent 0, black 80px);
+  mask-image: linear-gradient(to left, transparent 0, black 80px);
 }
 
 .character-image-box {
