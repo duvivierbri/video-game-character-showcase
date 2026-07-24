@@ -253,6 +253,7 @@
   align-self: stretch;
   aspect-ratio: 191 / 298;
   width: auto;
+  flex-shrink: 0;
   border: 2px solid #000000;
   border-radius: 6px;
   display: flex;
@@ -368,8 +369,8 @@
 .character-card {
   border: 2px solid #000000;
   border-radius: 6px;
-  width: 150px;
-  height: 150px;
+  width: clamp(80px, 8vw, 110px);
+  height: clamp(80px, 8vw, 110px);
   display: flex;
   align-items: center;
   justify-content: center;

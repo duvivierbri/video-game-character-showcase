@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import CharacterCard from '../components/characterSelect/CharacterCard'
 
-const COLS = 5
+const COLS = 7
 
 export default function CharacterSelectPage({ characters, loading, error, onSelectCharacter, onBack }) {
   const [activeIndex, setActiveIndex] = useState(0)
