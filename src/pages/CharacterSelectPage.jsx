@@ -61,6 +61,9 @@ export default function CharacterSelectPage({ characters, loading, error, onSele
                 : <span className="preview-placeholder">No image</span>
               }
               <p className="preview-name">{activeChar.name}</p>
+              <div className="preview-description">
+                {activeChar.description || <span className="preview-description--placeholder">No description available</span>}
+              </div>
             </>
           )}
         </div>

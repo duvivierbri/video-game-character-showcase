@@ -37,6 +37,7 @@ function App() {
             id: r.id,
             name: r.fields.Name ?? '—',
             biography: r.fields.Biography ?? '',
+            description: r.fields.Description ?? '',
             headshot: r.fields.Headshot?.[0]?.url ?? null,
             fullBody: r.fields['Full Body']?.[0]?.url ?? null,
             illustration: r.fields['Illustration']?.[0]?.url ?? null,
